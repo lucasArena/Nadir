@@ -46,7 +46,7 @@ class InspectionRepository implements IInspectionsRepository {
     id: string,
     inspectionData: ICreateInspectionsDTO,
   ): Promise<Inspection> {
-    const inspection = await this.orm.save(inspectionData);
+    const inspection = await this.orm.save({ id, ...inspectionData });
 
     return inspection;
   }
@@ -57,7 +57,9 @@ class InspectionRepository implements IInspectionsRepository {
   }
 
   async find(id: string): Promise<Inspection | undefined> {
-    const inspection = await this.orm.findOne(id, { relations: ['users'] });
+    const inspection = await this.orm.findOne(id, {
+      relations: ['user', 'machine'],
+    });
 
     return inspection;
   }

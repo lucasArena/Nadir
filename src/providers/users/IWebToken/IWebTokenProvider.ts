@@ -1,3 +1,3 @@
-import authConfig from '../../../config/auth';
-
-export default interface IWebTokenProvider { }
+export default interface IWebTokenProvider {
+  generateToken(userId: string): string;
+}
