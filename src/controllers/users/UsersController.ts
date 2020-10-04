@@ -3,10 +3,11 @@ import { container } from 'tsyringe';
 import CreateUserService from 'services/users/CreateUserService';
 import DeleteUserService from 'services/users/DeleteUserService';
 import FindAllUserService from 'services/users/FindAllUserService';
+import FindUserService from 'services/users/FindUserService';
 import UpdateUserService from 'services/users/UpdateUserService';
 
 class UsersController {
-  public async all(request: Request, response: Response): Promise<Response> {
+  public async all(_: Request, response: Response): Promise<Response> {
     const findAllUserService = container.resolve(FindAllUserService);
 
     const user = await findAllUserService.execute();
@@ -31,18 +32,25 @@ class UsersController {
   }
 
   public async find(request: Request, response: Response): Promise<Response> {
-    return response.json({ message: 'find' });
+    const { id } = request.params;
+
+    const findUserService = container.resolve(FindUserService);
+
+    const user = await findUserService.execute(id);
+
+    return response.json(user);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { username, password, role, isAdmin } = request.body;
+    const { name, username, password, role, isAdmin } = request.body;
 
     const updateUserService = container.resolve(UpdateUserService);
 
     const user = await updateUserService.execute({
       id,
       userData: {
+        name,
         username,
         password,
         role,

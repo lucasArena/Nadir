@@ -7,6 +7,7 @@ const machineController = new MachinesController();
 router.get('/', machineController.index);
 router.get('/:id', machineController.find);
 router.post('/', machineController.create);
+router.put('/:id', machineController.update);
 router.delete('/:id', machineController.delete);
 
 export default router;

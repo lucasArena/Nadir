@@ -1,7 +1,7 @@
 import { EntityRepository, Repository, getRepository } from 'typeorm';
 
 import IUserRepository from '../IUserRepository';
-import ICreateDTO from '../../../dtos/users/ICreateDTO';
+import IUser from '../../../dtos/users/IUser';
 import User from './entities/User';
 
 @EntityRepository(User)
@@ -17,7 +17,7 @@ class UserRepository implements IUserRepository {
     return users;
   }
 
-  async create(userData: ICreateDTO): Promise<User | undefined> {
+  async save(userData: IUser): Promise<User | undefined> {
     const user = this.repository.create(userData);
 
     await this.repository.save(user);
@@ -37,12 +37,6 @@ class UserRepository implements IUserRepository {
 
   async findById(id: string): Promise<User | undefined> {
     const user = await this.repository.findOne(id);
-    return user;
-  }
-
-  async update(id: string, userData: ICreateDTO): Promise<User | undefined> {
-    const user = await this.repository.save({ id, ...userData });
-
     return user;
   }
 

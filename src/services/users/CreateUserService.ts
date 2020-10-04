@@ -1,4 +1,4 @@
-import ICreateDTO from 'dtos/users/ICreateDTO';
+import IUser from 'dtos/users/IUser';
 import IUserRepository from 'repositories/users/IUserRepository';
 import { injectable, inject } from 'tsyringe';
 import User from 'repositories/users/typeorm/entities/User';
@@ -20,7 +20,7 @@ class CreateUserService {
     role,
     isAdmin,
     password,
-  }: ICreateDTO): Promise<User | undefined> {
+  }: IUser): Promise<User | undefined> {
     const userExists = await this.repository.findByUsername(username);
 
     if (userExists) {
@@ -29,7 +29,7 @@ class CreateUserService {
 
     const hashPassword = await this.hashProvider.generateHash(password);
 
-    const user = await this.repository.create({
+    const user = await this.repository.save({
       name,
       username,
       role,

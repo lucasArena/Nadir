@@ -1,7 +1,7 @@
 import { getRepository, EntityRepository, Repository } from 'typeorm';
 
-import ICreateDTO from 'dtos/machines/ICreateDTO';
 import AppError from 'shared/errors/AppError';
+import IMachine from 'dtos/machines/IMachine';
 import IMachineRepository from '../IMachineRepository';
 import Machine from './entities/Machine';
 
@@ -13,9 +13,9 @@ class MachineRepository implements IMachineRepository {
     this.repository = getRepository(Machine);
   }
 
-  async create(machineData: ICreateDTO): Promise<Machine> {
+  async save(machineData: IMachine): Promise<Machine> {
     const machine = this.repository.create(machineData);
-
+    console.log(machine);
     await this.repository.save(machine);
 
     return machine;
