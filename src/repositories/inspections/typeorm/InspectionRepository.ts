@@ -53,7 +53,7 @@ class InspectionRepository implements IInspectionsRepository {
 
   async index(): Promise<Inspection[]> {
     const inspections = await this.orm.find({
-      relations: ['bugs'],
+      relations: ['bugs', 'user', 'machine'],
     });
     return inspections;
   }
