@@ -60,7 +60,7 @@ class InspectionRepository implements IInspectionsRepository {
 
   async find(id: string): Promise<Inspection | undefined> {
     const inspection = await this.orm.findOne(id, {
-      relations: ['user', 'machine'],
+      relations: ['user', 'machine', 'bugs'],
     });
 
     return inspection;
